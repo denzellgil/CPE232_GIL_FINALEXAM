@@ -1,0 +1,45 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates(Ubuntu)
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+ 
+  - name: install updates(CentOS)
+    yum:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+ 
+- hosts: all
+  become: true
+  tasks:
+    - name: Install Nagios for Ubuntu server
+      include_role:
+        name: nagios-ubuntu
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Install Postgresql for Ubuntu server
+      include_role:
+        name: postgresql-ubuntu
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Install Nagios for CentOS server
+      include_role:
+        name: nagios-centos
+      when: ansible_distribution == "CentOS"
+
+    - name: install Postgresql for CentOS server
+      include_role:
+        name: postgresql-centos
+      when: ansible_distribution == "CentOS"
+
+    
+
+    

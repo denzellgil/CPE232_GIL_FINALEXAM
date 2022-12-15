@@ -1,0 +1,9 @@
+---
+
+- name: Postgresql (Ubuntu)
+  apt:
+    name: 
+      - postgresql
+      - postgresql-contrib
+    state: latest
+    update_cache: yes
